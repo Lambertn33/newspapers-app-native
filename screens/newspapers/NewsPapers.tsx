@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import {AppText} from "../../components/UI";
+import { AppContainer, AppText } from "../../components/UI";
 
 const NewsPapers = () => {
   return (
-    <View>
+    <AppContainer>
       <AppText>NewsPapers</AppText>
-    </View>
+    </AppContainer>
   );
 };
 

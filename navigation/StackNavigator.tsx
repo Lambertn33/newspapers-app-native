@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TabsNavigator from "./TabsNavigator";
 import { Home } from "../screens";
 
 const Stack = createNativeStackNavigator();
@@ -10,6 +11,7 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="tabs" component={TabsNavigator} />
     </Stack.Navigator>
   );
 };

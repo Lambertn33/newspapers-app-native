@@ -7,6 +7,7 @@ const Tabs = createBottomTabNavigator();
 const TabsNavigator = () => {
   return (
     <Tabs.Navigator
+      initialRouteName="publishers"
       screenOptions={{
         headerShown: false,
         tabBarStyle: {

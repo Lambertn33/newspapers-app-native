@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import {AppText} from "../../components/UI";
+import { AppText, AppContainer } from "../../components/UI";
 
 const Publishers = () => {
   return (
-    <View>
+    <AppContainer>
       <AppText>Publishers</AppText>
-    </View>
+    </AppContainer>
   );
 };
 
