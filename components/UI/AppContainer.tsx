@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import { FC, ReactNode } from "react";
 
-const AppContainer: FC<{ children: ReactNode }> = ({ children }) => {
-  return (
-    <View style={styles.container}>
-      {children}
-    </View>
-  );
+const AppContainer: FC<{ children: ReactNode; additionalStyles?: object }> = ({
+  children,
+  additionalStyles,
+}) => {
+  return <View style={[styles.container, additionalStyles]}>{children}</View>;
 };
 
 export default AppContainer;

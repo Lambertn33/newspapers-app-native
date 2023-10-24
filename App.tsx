@@ -1,8 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 
-import { TabsNavigator, StackNavigator } from "./navigation";
+import { StackNavigator } from "./navigation";
 
 import { useFonts, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 
@@ -18,10 +19,14 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+    <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <StackNavigator />
       </NavigationContainer>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#262626" },
+});

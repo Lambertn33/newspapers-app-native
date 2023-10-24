@@ -3,14 +3,14 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 
 import AppText from "./AppText";
 
-interface ButtonProps {
+interface AppButtonProps {
   onPress: () => any;
   buttonStyles: object;
   labelStyles: object;
   children: React.ReactNode;
 }
 
-const AppButton: FC<ButtonProps> = ({
+const AppButton: FC<AppButtonProps> = ({
   buttonStyles,
   children,
   labelStyles,

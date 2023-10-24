@@ -11,7 +11,7 @@ const StackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="tabs" component={TabsNavigator} />
+      <Stack.Screen name="Tabs" component={TabsNavigator} />
     </Stack.Navigator>
   );
 };
