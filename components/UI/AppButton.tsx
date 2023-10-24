@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { GlobalStyles } from "../../constants/styles";
 
 import AppText from "./AppText";
 
@@ -27,7 +28,7 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   button: {
-    borderColor: "#fff",
+    borderColor: GlobalStyles.colors.light,
     borderWidth: 2,
     borderRadius: 50,
     alignItems: "center",

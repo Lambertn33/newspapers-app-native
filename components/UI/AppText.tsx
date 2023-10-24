@@ -2,6 +2,8 @@ import { FC, ReactNode } from "react";
 import { StyleSheet, Text } from "react-native";
 import { useFonts, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 
+import { GlobalStyles } from "../../constants/styles";
+
 interface AppTextProps {
   children: ReactNode;
   labelStyles?: object;
@@ -23,7 +25,7 @@ export default AppText;
 
 const styles = StyleSheet.create({
   text: {
-    fontFamily: "Poppins_600SemiBold",
-    color: "#fff",
+    fontFamily: GlobalStyles.fontFamily,
+    color: GlobalStyles.colors.light,
   },
 });

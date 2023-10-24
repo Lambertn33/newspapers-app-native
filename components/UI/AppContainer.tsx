@@ -1,5 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
 import { FC, ReactNode } from "react";
+import { StyleSheet, View } from "react-native";
+
+import { GlobalStyles } from "../../constants/styles";
 
 const AppContainer: FC<{ children: ReactNode; additionalStyles?: object }> = ({
   children,
@@ -13,6 +15,6 @@ export default AppContainer;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#262626",
+    backgroundColor: GlobalStyles.colors.medium,
   },
 });

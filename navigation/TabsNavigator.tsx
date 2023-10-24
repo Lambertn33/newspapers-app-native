@@ -2,6 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import { NewsPapers, Publishers } from "../screens";
 
+import { GlobalStyles } from "../constants/styles";
+
 const Tabs = createBottomTabNavigator();
 
 const TabsNavigator = () => {
@@ -11,7 +13,7 @@ const TabsNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#000",
+          backgroundColor: GlobalStyles.colors.dark,
         },
       }}
     >
@@ -21,13 +23,17 @@ const TabsNavigator = () => {
         options={{
           title: "Publishers",
           tabBarLabel: "Publishers",
-          tabBarActiveTintColor: "#fff",
+          tabBarActiveTintColor: GlobalStyles.colors.light,
           tabBarLabelStyle: {
             fontSize: 14,
-            fontFamily: "Poppins_600SemiBold",
+            fontFamily: GlobalStyles.fontFamily,
           },
           tabBarIcon: () => (
-            <FontAwesome name="newspaper-o" size={19} color="#fff" />
+            <FontAwesome
+              name="newspaper-o"
+              size={19}
+              color={GlobalStyles.colors.light}
+            />
           ),
         }}
       />
@@ -37,12 +43,12 @@ const TabsNavigator = () => {
         options={{
           title: "Newspapers",
           tabBarLabel: "Newspapers",
-          tabBarActiveTintColor: "#fff",
+          tabBarActiveTintColor: GlobalStyles.colors.light,
           tabBarLabelStyle: {
             fontSize: 14,
-            fontFamily: "Poppins_600SemiBold",
+            fontFamily: GlobalStyles.fontFamily,
           },
-          tabBarIcon: () => <Entypo name="publish" size={19} color="#fff" />,
+          tabBarIcon: () => <Entypo name="publish" size={19} color={GlobalStyles.colors.light} />,
         }}
       />
     </Tabs.Navigator>

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
 import { FC, ReactNode } from "react";
+import { Pressable } from "react-native";
 
 interface AppIconProps {
   onPress: () => any;
@@ -11,5 +11,3 @@ const AppIcon: FC<AppIconProps> = ({ icon, onPress }) => {
 };
 
 export default AppIcon;
-
-const styles = StyleSheet.create({});

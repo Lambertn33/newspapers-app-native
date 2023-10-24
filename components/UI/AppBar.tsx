@@ -2,6 +2,7 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import AppText from "./AppText";
+import { GlobalStyles } from "../../constants/styles";
 
 interface AppBarProps {
   title: string;
@@ -25,7 +26,7 @@ export default AppBar;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000",
+    backgroundColor: GlobalStyles.colors.dark,
     flexDirection: "row",
     paddingVertical: 14,
     justifyContent: "space-between",
