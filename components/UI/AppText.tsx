@@ -2,9 +2,9 @@ import { FC, ReactNode } from "react";
 import { StyleSheet, Text } from "react-native";
 import { useFonts, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 
-const AppText: FC<{ children: ReactNode; additionalStyles?: object }> = ({
+const AppText: FC<{ children: ReactNode; labelStyles?: object }> = ({
   children,
-  additionalStyles,
+  labelStyles,
 }) => {
     
   let [fontsLoaded, fontError] = useFonts({
@@ -15,7 +15,7 @@ const AppText: FC<{ children: ReactNode; additionalStyles?: object }> = ({
     return null;
   }
 
-  return <Text style={[styles.text, additionalStyles]}>{children}</Text>;
+  return <Text style={[styles.text, labelStyles]}>{children}</Text>;
 };
 
 export default AppText;
@@ -23,5 +23,6 @@ export default AppText;
 const styles = StyleSheet.create({
   text: {
     fontFamily: "Poppins_600SemiBold",
+    color: '#fff'
   },
 });

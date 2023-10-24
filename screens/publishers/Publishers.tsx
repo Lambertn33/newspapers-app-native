@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import AppText from "../../components/AppText";
+import {AppText} from "../../components/UI";
 
 const Publishers = () => {
   return (
