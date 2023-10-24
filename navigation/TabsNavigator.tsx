@@ -48,7 +48,13 @@ const TabsNavigator = () => {
             fontSize: 14,
             fontFamily: GlobalStyles.fontFamily,
           },
-          tabBarIcon: () => <Entypo name="publish" size={19} color={GlobalStyles.colors.light} />,
+          tabBarIcon: () => (
+            <Entypo
+              name="publish"
+              size={19}
+              color={GlobalStyles.colors.light}
+            />
+          ),
         }}
       />
     </Tabs.Navigator>
