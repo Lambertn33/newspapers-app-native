@@ -97,7 +97,7 @@ const Publisher: FC<{ route: any; navigation: any }> = ({
               {/* newspapers */}
               <View>
                 <AppText labelStyles={styles.newspapersTitle}>{publisher?.names}'s Newspapers</AppText>
-                <PublisherNewsPapers newspapers={publisher?.newsPapers} />
+                <PublisherNewsPapers newspapers={publisher?.newsPapers} names={publisher?.names}/>
               </View>
             </View>
           </ScrollView>

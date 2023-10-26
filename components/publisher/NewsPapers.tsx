@@ -24,7 +24,8 @@ interface INewsPaper {
 
 const NewsPapers: FC<{
   newspapers: INewsPaper[] | undefined;
-}> = ({ newspapers }) => {
+  names: string | undefined;
+}> = ({ newspapers, names }) => {
   const { width } = Dimensions.get("window");
   const itemWidth = width / 1.5;
 
@@ -51,12 +52,20 @@ const NewsPapers: FC<{
   );
 
   return (
-    <FlatList
-      data={newspapers}
-      horizontal={true}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id.toString()}
-    />
+    <>
+      {newspapers?.length! > 0 ? (
+        <FlatList
+          data={newspapers}
+          horizontal={true}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      ) : (
+        <View style={styles.empty}>
+          <AppText>{names} has No newspapers available</AppText>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -92,6 +101,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
+  empty: {
+    backgroundColor: GlobalStyles.colors.danger,
+    paddingVertical: 6,
+    borderRadius: 8,
+    alignItems: 'center'
+  }
 });
 
 export default NewsPapers;
