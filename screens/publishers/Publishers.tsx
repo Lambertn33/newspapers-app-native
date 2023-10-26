@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 
 import { PublishersContext } from "../../context/PublishersContext";
@@ -9,9 +9,11 @@ import {
   AppContainer,
   AppBar,
   AppIndicator,
+  AppError,
 } from "../../components/UI";
+
+import PublishersList from "../../components/publishers/PublishersList";
 import { GlobalStyles } from "../../constants/styles";
-import AppError from "../../components/UI/AppError";
 
 const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
   const { loading, error, publishers } = useContext(PublishersContext);
@@ -44,9 +46,9 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
         ) : error !== null ? (
           <AppError error="We couldn't fetch the publishers..." />
         ) : publishers.length > 0 ? (
-          publishers.map((publisher) => (
-            <AppText key={publisher.id}>{publisher.names}</AppText>
-          ))
+          <ScrollView>
+            <PublishersList publishers={publishers} />
+          </ScrollView>
         ) : (
           <AppText>No publishers available</AppText>
         )}
@@ -59,6 +61,7 @@ export default Publishers;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12
-  }
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
 });

@@ -12,7 +12,7 @@ interface IPublisher {
   names: string;
   joinedDate: Date;
   _count: {
-    newspapers: number;
+    newsPapers: number;
   };
 }
 
