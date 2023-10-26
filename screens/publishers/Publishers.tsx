@@ -1,11 +1,21 @@
-import { FC } from "react";
-import { StyleSheet } from "react-native";
+import { FC, useContext } from "react";
+import { StyleSheet, View } from "react-native";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 
-import { AppText, AppContainer, AppBar } from "../../components/UI";
+import { PublishersContext } from "../../context/PublishersContext";
+
+import {
+  AppText,
+  AppContainer,
+  AppBar,
+  AppIndicator,
+} from "../../components/UI";
 import { GlobalStyles } from "../../constants/styles";
+import AppError from "../../components/UI/AppError";
 
 const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
+  const { loading, error, publishers } = useContext(PublishersContext);
+
   const goBack = () => navigation.navigate("Home");
 
   return (
@@ -28,11 +38,27 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
           />
         }
       />
-      <AppText>Publishers</AppText>
+      <View style={styles.container}>
+        {loading ? (
+          <AppIndicator />
+        ) : error !== null ? (
+          <AppError error="We couldn't fetch the publishers..." />
+        ) : publishers.length > 0 ? (
+          publishers.map((publisher) => (
+            <AppText key={publisher.id}>{publisher.names}</AppText>
+          ))
+        ) : (
+          <AppText>No publishers available</AppText>
+        )}
+      </View>
     </AppContainer>
   );
 };
 
 export default Publishers;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    padding: 12
+  }
+});

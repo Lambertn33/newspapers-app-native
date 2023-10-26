@@ -6,6 +6,9 @@ import { StackNavigator } from "./navigation";
 
 import { useFonts, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 
+import { PublishersContextProvider } from "./context";
+import { GlobalStyles } from "./constants/styles";
+
 export default function App() {
   let [fontsLoaded, fontError] = useFonts({
     Poppins_600SemiBold,
@@ -18,12 +21,14 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-        <StackNavigator />
+        <PublishersContextProvider>
+          <StackNavigator />
+        </PublishersContextProvider>
       </NavigationContainer>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#262626" },
+  container: { flex: 1, backgroundColor: GlobalStyles.colors.medium },
 });
