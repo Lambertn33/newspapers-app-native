@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { AppText } from "../UI";
@@ -31,6 +32,9 @@ const PublishersList: FC<{ publishers: IPublisher[] }> = ({ publishers }) => {
 
 // single publisher
 const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
+  const navigation: any = useNavigation();
+  const navigate = () => navigation.navigate("publisher", { publisherId: publisher.id });
+
   return (
     <View style={styles.publisherContainer}>
       <View>
@@ -41,7 +45,7 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
       <View style={styles.publisherActions}>
         <AppIcon
           icon={<Ionicons name="eye" size={24} color="white" />}
-          onPress={() => null}
+          onPress={navigate}
         />
         <AppIcon
           icon={<Ionicons name="create-sharp" size={24} color="white" />}

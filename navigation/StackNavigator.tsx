@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Home, Publisher } from "../screens";
 import TabsNavigator from "./TabsNavigator";
-import { Home } from "../screens";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +12,7 @@ const StackNavigator = () => {
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Tabs" component={TabsNavigator} />
+      <Stack.Screen name="publisher" component={Publisher} />
     </Stack.Navigator>
   );
 };
