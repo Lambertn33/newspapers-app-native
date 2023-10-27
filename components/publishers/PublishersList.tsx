@@ -1,14 +1,16 @@
-import { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { FC, useContext } from "react";
+import { StyleSheet, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
-import { AppText } from "../UI";
+import { PublishersContext } from "../../context/PublishersContext";
+
+import { AppText, AppIcon } from "../UI";
 
 import { formatDate } from "../../helpers/date";
 import { GlobalStyles } from "../../constants/styles";
 
-import AppIcon from "../UI/AppIcon";
+import { deletePublisher } from "../../api/api";
 
 interface IPublisher {
   id: number;
@@ -33,7 +35,25 @@ const PublishersList: FC<{ publishers: IPublisher[] }> = ({ publishers }) => {
 // single publisher
 const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
   const navigation: any = useNavigation();
-  const navigate = () => navigation.navigate("publisher", { publisherId: publisher.id });
+  const publishersCtx = useContext(PublishersContext);
+
+  const navigate = () =>
+    navigation.navigate("publisher", { publisherId: publisher.id });
+
+  // delete publisher
+  const removePublisher = async (id: number) => {
+    try {
+      await deletePublisher(id);
+      publishersCtx.removePublisher(id);
+      Alert.alert(
+        "Success",
+        "Publisher and related newspapers deleted successfully"
+      );
+    } catch (error) {
+      // TODO: UPDATE
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.publisherContainer}>
@@ -53,7 +73,7 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
         />
         <AppIcon
           icon={<Ionicons name="trash" size={24} color="white" />}
-          onPress={() => null}
+          onPress={() => removePublisher(publisher.id)}
         />
       </View>
     </View>

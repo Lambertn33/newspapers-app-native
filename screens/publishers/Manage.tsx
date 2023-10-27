@@ -41,7 +41,9 @@ export const Manage: FC<{ navigation: any }> = ({ navigation }) => {
       };
       publishersCtx.addPublisher(createdPublisher);
       navigation.navigate("publishers");
-    } catch (error) {}
+    } catch (error) {
+      // TODO: Handler errors
+    }
   };
 
   return (
