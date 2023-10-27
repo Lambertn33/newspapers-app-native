@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 
 import { PublishersContext } from "../../context/PublishersContext";
@@ -22,7 +22,7 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
 
   const managePublisher = () => {
     navigation.navigate("managePublisher");
-  }
+  };
 
   return (
     <AppContainer>
@@ -45,7 +45,7 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
           />
         }
       />
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {loading ? (
           <AppIndicator />
         ) : error !== null ? (
@@ -55,9 +55,11 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
             <PublishersList publishers={publishers} />
           </ScrollView>
         ) : (
-          <AppText>No publishers available</AppText>
+          <View style={styles.emptyList}>
+            <AppText>No publishers available</AppText>
+          </View>
         )}
-      </View>
+      </SafeAreaView>
     </AppContainer>
   );
 };
@@ -68,5 +70,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
+    flex: 1,
+  },
+  emptyList: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
