@@ -20,12 +20,14 @@ interface IPublishersContext {
   publishers: IPublisher[];
   loading: boolean;
   error: Error | null | unknown;
+  addPublisher: (newPublisher: IPublisher) => void;
 }
 
 export const PublishersContext = createContext<IPublishersContext>({
   publishers: [],
   loading: false,
   error: null,
+  addPublisher: (newPublisher: IPublisher) => {},
 });
 
 const PublishersContextProvider: FC<{ children: ReactNode }> = ({
@@ -50,10 +52,17 @@ const PublishersContextProvider: FC<{ children: ReactNode }> = ({
     fetchPublishers();
   }, []);
 
+  const addPublisher = (newPublisher: IPublisher) => {
+    setPublishers((prevState) => {
+      return [...prevState, newPublisher];
+    });
+  };
+
   const contextValue: IPublishersContext = {
     publishers,
     loading,
     error,
+    addPublisher,
   };
 
   return (
