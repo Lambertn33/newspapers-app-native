@@ -9,7 +9,7 @@ const Tabs = createBottomTabNavigator();
 const TabsNavigator = () => {
   return (
     <Tabs.Navigator
-      initialRouteName="publishers"
+      initialRouteName="newspapers"
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
@@ -17,26 +17,6 @@ const TabsNavigator = () => {
         },
       }}
     >
-      <Tabs.Screen
-        name="publishers"
-        component={Publishers}
-        options={{
-          title: "Publishers",
-          tabBarLabel: "Publishers",
-          tabBarActiveTintColor: GlobalStyles.colors.light,
-          tabBarLabelStyle: {
-            fontSize: 14,
-            fontFamily: GlobalStyles.fontFamily,
-          },
-          tabBarIcon: () => (
-            <FontAwesome
-              name="newspaper-o"
-              size={19}
-              color={GlobalStyles.colors.light}
-            />
-          ),
-        }}
-      />
       <Tabs.Screen
         name="newspapers"
         component={NewsPapers}
@@ -51,6 +31,26 @@ const TabsNavigator = () => {
           tabBarIcon: () => (
             <Entypo
               name="publish"
+              size={19}
+              color={GlobalStyles.colors.light}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="publishers"
+        component={Publishers}
+        options={{
+          title: "Publishers",
+          tabBarLabel: "Publishers",
+          tabBarActiveTintColor: GlobalStyles.colors.light,
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontFamily: GlobalStyles.fontFamily,
+          },
+          tabBarIcon: () => (
+            <FontAwesome
+              name="users"
               size={19}
               color={GlobalStyles.colors.light}
             />
