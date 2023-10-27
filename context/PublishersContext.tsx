@@ -21,6 +21,7 @@ interface IPublishersContext {
   loading: boolean;
   error: Error | null | unknown;
   addPublisher: (newPublisher: IPublisher) => void;
+  removePublisher: (id: number) => void;
 }
 
 export const PublishersContext = createContext<IPublishersContext>({
@@ -28,6 +29,7 @@ export const PublishersContext = createContext<IPublishersContext>({
   loading: false,
   error: null,
   addPublisher: (newPublisher: IPublisher) => {},
+  removePublisher: (id: number) => {},
 });
 
 const PublishersContextProvider: FC<{ children: ReactNode }> = ({
@@ -58,11 +60,17 @@ const PublishersContextProvider: FC<{ children: ReactNode }> = ({
     });
   };
 
+  const removePublisher = (id: number) => {
+    const filteredPublishers = publishers.filter((pub) => pub.id !== id);
+    setPublishers(filteredPublishers);
+  };
+
   const contextValue: IPublishersContext = {
     publishers,
     loading,
     error,
     addPublisher,
+    removePublisher,
   };
 
   return (

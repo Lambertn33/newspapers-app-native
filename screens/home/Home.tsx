@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     paddingVertical: 8,
+    borderColor: GlobalStyles.colors.light,
+    borderWidth: 2,
   },
   buttonLabel: {
     fontSize: 20,

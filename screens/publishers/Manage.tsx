@@ -20,7 +20,7 @@ interface IPublisherInputs {
 export const Manage: FC<{ navigation: any }> = ({ navigation }) => {
   const publishersCtx = useContext(PublishersContext);
   const goBack = () => navigation.goBack();
-  
+
   //create/ update publisher
   const managePublisherHandler = async (values: IPublisherInputs) => {
     const data: IPublisherInputs = {
@@ -58,7 +58,10 @@ export const Manage: FC<{ navigation: any }> = ({ navigation }) => {
         }
       />
       <View style={styles.formContainer}>
-        <PublishersForm onManagePublisher={managePublisherHandler} />
+        <PublishersForm
+          goBack={goBack}
+          onManagePublisher={managePublisherHandler}
+        />
       </View>
     </AppContainer>
   );

@@ -44,3 +44,8 @@ export const createPublisher = async (data: IPublisherInputs) => {
   const response = await POST("publishers", data);
   return await response;
 };
+
+export const deletePublisher = async (id: number) => {
+  const response = await DELETE(`publishers/${id}`);
+  return response;
+};

@@ -3,10 +3,12 @@ import { Alert, StyleSheet, View } from "react-native";
 
 import React from "react";
 import { AppButton, AppDatePicker, AppTextInput } from "../UI";
+import { GlobalStyles } from "../../constants/styles";
 
-const PublishersForm: FC<{ onManagePublisher: Function }> = ({
-  onManagePublisher,
-}) => {
+const PublishersForm: FC<{
+  onManagePublisher: Function;
+  goBack: () => void;
+}> = ({ onManagePublisher, goBack }) => {
   const [publisher, setPublisher] = useState({
     names: "",
     joinedDate: new Date(),
@@ -49,13 +51,20 @@ const PublishersForm: FC<{ onManagePublisher: Function }> = ({
           onChangeDate={inputChangedHandler.bind(this, "joinedDate")}
         />
       </View>
-      <View style={styles.buttonContainer}>
+      <View style={styles.buttonsContainer}>
         <AppButton
           onPress={managePublisher}
-          buttonStyles={styles.button}
-          labelStyles={styles.buttonLabel}
+          buttonStyles={styles.formButton}
+          labelStyles={styles.formButtonLabel}
         >
           Create Publisher
+        </AppButton>
+        <AppButton
+          onPress={goBack}
+          buttonStyles={styles.cancelButton}
+          labelStyles={styles.cancelButtonLabel}
+        >
+          Cancel
         </AppButton>
       </View>
     </View>
@@ -67,15 +76,29 @@ export default PublishersForm;
 const styles = StyleSheet.create({
   container: {
     gap: 24,
+    paddingVertical: 12,
   },
-  buttonContainer: {
+  buttonsContainer: {
     marginTop: 12,
+    gap: 24,
   },
-  button: {
+  formButton: {
     width: "100%",
     paddingVertical: 5,
+    borderColor: GlobalStyles.colors.light,
+    borderWidth: 2,
   },
-  buttonLabel: {
+  cancelButton: {
+    backgroundColor: GlobalStyles.colors.light,
+    paddingVertical: 5,
+    borderColor: GlobalStyles.colors.light,
+    borderWidth: 2,
+  },
+  cancelButtonLabel: {
+    fontSize: 20,
+    color: GlobalStyles.colors.semilight,
+  },
+  formButtonLabel: {
     fontSize: 20,
   },
   inputsContainer: {

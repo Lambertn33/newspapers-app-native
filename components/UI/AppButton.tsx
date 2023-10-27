@@ -28,8 +28,6 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   button: {
-    borderColor: GlobalStyles.colors.light,
-    borderWidth: 2,
     borderRadius: 50,
     alignItems: "center",
   },
