@@ -1,20 +1,32 @@
 import { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 
 import { AppContainer, AppText, AppButton } from "../../components/UI";
+import { GlobalStyles } from "../../constants/styles";
 
 const Home: FC<{ navigation: any }> = ({ navigation }) => {
+  const image = require("../../assets/images/newspapers.png");
   const navigate = () => navigation.navigate("Tabs");
 
   return (
-    <AppContainer additionalStyles={styles.container}>
+    <AppContainer>
+      <View style={styles.imageContainer}>
+        <Image source={image} style={styles.image} />
+      </View>
       <View style={styles.content}>
-        <AppText labelStyles={styles.title}>Newspapers App</AppText>
-        <AppText>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad ratione
-          possimus alias suscipit atque, id, neque nisi nam sapiente iure ut, in
-          dolores quo eius enim maiores blanditiis consequuntur veritatis.
-        </AppText>
+        <View>
+          <AppText labelStyles={styles.title}>Newspapers App</AppText>
+          <AppText>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad ratione
+            possimus alias suscipit atque, id, neque nisi nam sapiente iure ut,
+            in dolores quo eius enim maiores blanditiis consequuntur veritatis.
+          </AppText>
+          <AppText>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad ratione
+            possimus alias suscipit atque, id, neque nisi nam sapiente iure ut,
+            in dolores quo eius enim maiores blanditiis consequuntur veritatis.
+          </AppText>
+        </View>
         <AppButton
           onPress={navigate}
           buttonStyles={styles.button}
@@ -30,17 +42,29 @@ const Home: FC<{ navigation: any }> = ({ navigation }) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
+  imageContainer: {
+    flex: 1,
+    backgroundColor: GlobalStyles.colors.semilight,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
   },
   content: {
-    width: "90%",
+    flex: 1,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingHorizontal: 16,
+    marginTop: -40,
+    paddingVertical: 10,
+    backgroundColor: GlobalStyles.colors.dark,
+    justifyContent: 'space-between',
     gap: 24,
   },
   title: {
     textTransform: "uppercase",
-    fontSize: 24,
+    fontSize: 32,
     textAlign: "center",
   },
   button: {

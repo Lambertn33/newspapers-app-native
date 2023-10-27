@@ -5,7 +5,12 @@ import { Entypo, AntDesign } from "@expo/vector-icons";
 import { getPublisher } from "../../api/api";
 import { GlobalStyles } from "../../constants/styles";
 
-import { AppBar, AppContainer, AppIndicator, AppText } from "../../components/UI";
+import {
+  AppBar,
+  AppContainer,
+  AppIndicator,
+  AppText,
+} from "../../components/UI";
 import {
   PublisherHeader,
   PublisherNewsPapers,
@@ -68,13 +73,6 @@ const Publisher: FC<{ route: any; navigation: any }> = ({
         <>
           <AppBar
             title={publisherState.publisher?.names!}
-            actionIcon={
-              <Entypo
-                name="add-to-list"
-                size={32}
-                color={GlobalStyles.colors.light}
-              />
-            }
             backIcon={
               <AntDesign
                 name="back"
@@ -96,8 +94,13 @@ const Publisher: FC<{ route: any; navigation: any }> = ({
 
               {/* newspapers */}
               <View>
-                <AppText labelStyles={styles.newspapersTitle}>{publisher?.names}'s Newspapers</AppText>
-                <PublisherNewsPapers newspapers={publisher?.newsPapers} names={publisher?.names}/>
+                <AppText labelStyles={styles.newspapersTitle}>
+                  {publisher?.names}'s Newspapers
+                </AppText>
+                <PublisherNewsPapers
+                  newspapers={publisher?.newsPapers}
+                  names={publisher?.names}
+                />
               </View>
             </View>
           </ScrollView>
@@ -114,10 +117,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 16,
     flex: 1,
-    gap:16
+    gap: 16,
   },
   newspapersTitle: {
-    textAlign: 'center',
-    fontSize: 16
-  }
+    textAlign: "center",
+    fontSize: 16,
+  },
 });

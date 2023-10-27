@@ -20,6 +20,10 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
 
   const goBack = () => navigation.navigate("Home");
 
+  const managePublisher = () => {
+    navigation.navigate("managePublisher");
+  }
+
   return (
     <AppContainer>
       <AppBar
@@ -29,6 +33,7 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
             name="add-to-list"
             size={32}
             color={GlobalStyles.colors.light}
+            onPress={managePublisher}
           />
         }
         backIcon={

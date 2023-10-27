@@ -6,7 +6,7 @@ import { GlobalStyles } from "../../constants/styles";
 
 interface AppBarProps {
   title: string;
-  actionIcon: React.ReactNode;
+  actionIcon?: React.ReactNode;
   backIcon?: React.ReactNode
 }
 
