@@ -21,7 +21,9 @@ const Publishers: FC<{ navigation: any }> = ({ navigation }) => {
   const goBack = () => navigation.navigate("Home");
 
   const managePublisher = () => {
-    navigation.navigate("managePublisher");
+    navigation.navigate("managePublisher", {
+      isEditing: false
+    });
   };
 
   return (

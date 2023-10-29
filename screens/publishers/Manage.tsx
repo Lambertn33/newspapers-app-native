@@ -4,7 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 import { PublishersContext } from "../../context/PublishersContext";
 
-import { createPublisher } from "../../api/api";
+import { createPublisher, updatePublisher } from "../../api/api";
 import { AppContainer, AppBar } from "../../components/UI";
 import { GlobalStyles } from "../../constants/styles";
 
@@ -17,39 +17,56 @@ interface IPublisherInputs {
   joinedDate: string;
 }
 
-export const Manage: FC<{ navigation: any }> = ({ navigation }) => {
+export const Manage: FC<{ navigation: any; route: any }> = ({
+  navigation,
+  route,
+}) => {
   const publishersCtx = useContext(PublishersContext);
   const goBack = () => navigation.goBack();
 
   //create/ update publisher
   const managePublisherHandler = async (values: IPublisherInputs) => {
-    const data: IPublisherInputs = {
-      names: values.names,
-      joinedDate: stringifyDate(values.joinedDate),
-    };
     try {
-      const response = await createPublisher(data);
-      const { newPublisher } = response;
-
-      const createdPublisher = {
-        id: newPublisher.id,
-        names: newPublisher.names,
-        joinedDate: newPublisher.joinedDate,
-        _count: {
-          newsPapers: 0,
-        },
+      const data: IPublisherInputs = {
+        names: values.names,
+        joinedDate: stringifyDate(values.joinedDate),
       };
-      publishersCtx.addPublisher(createdPublisher);
+
+      let response = route.params.isEditing
+        ? await updatePublisher(values.id!, data)
+        : await createPublisher(data);
+
+      const { updatedPublisher, newPublisher } = response;
+
+      if (route.params.isEditing) {
+        const editedPublisher = {
+          id: updatedPublisher.id,
+          names: updatedPublisher.names,
+          joinedDate: updatedPublisher.joinedDate,
+        };
+        publishersCtx.editPublisher(editedPublisher);
+      } else {
+        const createdPublisher = {
+          id: newPublisher.id,
+          names: newPublisher.names,
+          joinedDate: newPublisher.joinedDate,
+          _count: {
+            newsPapers: 0,
+          },
+        };
+        publishersCtx.addPublisher(createdPublisher);
+      }
+
       navigation.navigate("publishers");
     } catch (error) {
-      // TODO: Handler errors
+      // TODO: Handle errors
     }
   };
 
   return (
     <AppContainer>
       <AppBar
-        title="ADD PUBLISHER"
+        title={route.params.isEditing ? "EDIT PUBLISHER" : "ADD PUBLISHER"}
         backIcon={
           <AntDesign
             name="back"
@@ -63,6 +80,10 @@ export const Manage: FC<{ navigation: any }> = ({ navigation }) => {
         <PublishersForm
           goBack={goBack}
           onManagePublisher={managePublisherHandler}
+          publisherToEdit={
+            route.params.isEditing ? route.params.publisher : null
+          }
+          isEditing={route.params.isEditing}
         />
       </View>
     </AppContainer>

@@ -49,3 +49,8 @@ export const deletePublisher = async (id: number) => {
   const response = await DELETE(`publishers/${id}`);
   return response;
 };
+
+export const updatePublisher = async (id: number, data: IPublisherInputs) => {
+  const response = await PUT(`publishers/${id}`, data);
+  return response;
+};

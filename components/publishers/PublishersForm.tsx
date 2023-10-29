@@ -1,17 +1,24 @@
 import { FC, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
-import React from "react";
 import { AppButton, AppDatePicker, AppTextInput } from "../UI";
 import { GlobalStyles } from "../../constants/styles";
 
 const PublishersForm: FC<{
   onManagePublisher: Function;
   goBack: () => void;
-}> = ({ onManagePublisher, goBack }) => {
+  publisherToEdit: {
+    id: number | null;
+    names: string;
+    joinedDate: Date;
+  } | null;
+  isEditing: boolean;
+}> = ({ onManagePublisher, goBack, publisherToEdit, isEditing }) => {
+  
   const [publisher, setPublisher] = useState({
-    names: "",
-    joinedDate: new Date(),
+    id: isEditing ? publisherToEdit?.id : null,
+    names: isEditing ? publisherToEdit?.names : "",
+    joinedDate: isEditing ? new Date(publisherToEdit?.joinedDate!) : new Date(),
   });
 
   const inputChangedHandler = (input: string, value: string | Date) => {
@@ -25,7 +32,7 @@ const PublishersForm: FC<{
 
   const managePublisher = () => {
     const { names } = publisher;
-    const namesIsValid = names.trim().length > 0;
+    const namesIsValid = names!.trim().length > 0;
 
     if (!namesIsValid) {
       Alert.alert("Error...", "please correct all errors and try again");
@@ -47,7 +54,7 @@ const PublishersForm: FC<{
         />
         <AppDatePicker
           label="Publisher Joined Date"
-          date={publisher.joinedDate}
+          date={publisher.joinedDate!}
           onChangeDate={inputChangedHandler.bind(this, "joinedDate")}
         />
       </View>
@@ -57,7 +64,7 @@ const PublishersForm: FC<{
           buttonStyles={styles.formButton}
           labelStyles={styles.formButtonLabel}
         >
-          Create Publisher
+         {isEditing ? "Edit Publisher" : "Create Publisher"}
         </AppButton>
         <AppButton
           onPress={goBack}

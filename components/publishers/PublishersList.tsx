@@ -16,11 +16,10 @@ interface IPublisher {
   id: number;
   names: string;
   joinedDate: Date;
-  _count: {
+  _count?: {
     newsPapers: number;
   };
 }
-
 // publishers list
 const PublishersList: FC<{ publishers: IPublisher[] }> = ({ publishers }) => {
   return (
@@ -37,8 +36,16 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
   const navigation: any = useNavigation();
   const publishersCtx = useContext(PublishersContext);
 
-  const navigate = () =>
+  // view publisher details
+  const viewPublisher = () =>
     navigation.navigate("publisher", { publisherId: publisher.id });
+
+  const updatePublisher = (publisher: IPublisher) => {
+    navigation.navigate("managePublisher", {
+      isEditing: true,
+      publisher,
+    });
+  };
 
   // delete publisher
   const removePublisher = async (id: number) => {
@@ -60,16 +67,16 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
       <View>
         <AppText labelStyles={styles.publisherTitle}>{publisher.names}</AppText>
         <AppText>Joined on {formatDate(publisher.joinedDate)}</AppText>
-        <AppText>number of Newspapers: {publisher._count.newsPapers}</AppText>
+        <AppText>number of Newspapers: {publisher._count?.newsPapers}</AppText>
       </View>
       <View style={styles.publisherActions}>
         <AppIcon
           icon={<Ionicons name="eye" size={24} color="white" />}
-          onPress={navigate}
+          onPress={viewPublisher}
         />
         <AppIcon
           icon={<Ionicons name="create-sharp" size={24} color="white" />}
-          onPress={() => null}
+          onPress={() => updatePublisher(publisher)}
         />
         <AppIcon
           icon={<Ionicons name="trash" size={24} color="white" />}
