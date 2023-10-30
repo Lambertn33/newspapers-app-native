@@ -16,7 +16,6 @@ import NewspapersList from "../../components/newspapers/NewspapersList";
 
 const NewsPapers: FC<{ navigation: any }> = ({ navigation }) => {
   const { error, loading, newspapers } = useContext(NewspapersContext);
-  console.log("newspapers", newspapers);
   const goBack = () => navigation.navigate("Home");
 
   return (

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Entypo, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import { getPublisher } from "../../api/api";
 import { GlobalStyles } from "../../constants/styles";

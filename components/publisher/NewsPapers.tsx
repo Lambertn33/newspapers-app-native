@@ -27,7 +27,7 @@ const NewsPapers: FC<{
   names: string | undefined;
 }> = ({ newspapers, names }) => {
   const { width } = Dimensions.get("window");
-  const itemWidth = width / 1.5;
+  const itemWidth = newspapers?.length! > 1 ? width / 1.5 : width;
 
   const renderItem: ListRenderItem<INewsPaper> = ({ item }) => (
     <View style={[styles.item, { width: itemWidth }]}>
@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: GlobalStyles.colors.danger,
     paddingVertical: 6,
     borderRadius: 8,
-    alignItems: 'center'
-  }
+    alignItems: "center",
+  },
 });
 
 export default NewsPapers;
