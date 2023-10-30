@@ -21,12 +21,14 @@ interface INewspapersContext {
   newspapers: INewspaper[];
   loading: boolean;
   error: Error | null | unknown;
+  removeNewspaper: (id: number) => void;
 }
 
 export const NewspapersContext = createContext<INewspapersContext>({
   newspapers: [],
   loading: false,
   error: null,
+  removeNewspaper: (id: number) => {}
 });
 
 const NewspapersContextProvider: FC<{ children: ReactNode }> = ({
@@ -37,7 +39,7 @@ const NewspapersContextProvider: FC<{ children: ReactNode }> = ({
   const [error, setError] = useState<Error | null | unknown>(null);
 
   useEffect(() => {
-    const fetchPublishers = async () => {
+    const fetchNewspapers = async () => {
       setLoading(true);
       try {
         const response = await getNewspapers();
@@ -48,13 +50,20 @@ const NewspapersContextProvider: FC<{ children: ReactNode }> = ({
         setLoading(false);
       }
     };
-    fetchPublishers();
+    fetchNewspapers();
   }, []);
+
+  const removeNewspaper = (id: number) => {
+    const filteredNewspapers = newspapers.filter((newspaper) => newspaper.id !== id);
+    setNewspapers(filteredNewspapers);
+  };
 
   const contextValue: INewspapersContext = {
     newspapers,
     loading,
     error,
+    removeNewspaper
+
   };
 
   return (

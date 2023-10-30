@@ -61,3 +61,12 @@ export const getNewspapers = async () => {
   const { newspapers } = await GET("newspapers");
   return newspapers;
 };
+
+export const getNewspaper = async (id: string) => {
+  const { newspaper } = await GET(`newspapers/${id}`);
+  return newspaper;
+};
+export const deleteNewspaper = async (id: number) => {
+  const response = await DELETE(`newspapers/${id}`);
+  return response;
+};

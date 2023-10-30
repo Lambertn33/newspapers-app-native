@@ -1,7 +1,10 @@
-import { FC } from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { FC, useContext } from "react";
+import { Alert, Image, StyleSheet, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
-import { AntDesign, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { NewspapersContext } from "../../context/NewspapersContext";
+
+import { deleteNewspaper } from "../../api/api";
 
 import { AppIcon, AppText } from "../UI";
 import { formatDate } from "../../helpers/date";
@@ -18,7 +21,21 @@ interface INewspaper {
 }
 
 const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
-  const renderLeftActions = () => {
+  const newspapersCtx = useContext(NewspapersContext);
+  // delete newspaper
+  const removeNewspaper = async (id: number) => {
+    try {
+      await deleteNewspaper(id);
+      newspapersCtx.removeNewspaper(id);
+      Alert.alert("Success", "Newspaper deleted successfully");
+    } catch (error) {
+      // TODO: UPDATE
+      console.log(error);
+    }
+  };
+
+  // view newspaper details
+  const renderLeftActions = (id: number) => {
     return (
       <View
         style={[
@@ -34,57 +51,38 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
               color={GlobalStyles.colors.dark}
             />
           }
-          onPress={() => console.log("edit")}
+          onPress={() => console.log("view", id)}
         />
       </View>
     );
   };
 
-  // edit & delete Action
-  const renderRightActions = () => {
+  // delete Action
+  const renderRightActions = (id: number) => {
     return (
-      <View style={{ flexDirection: "row", gap: 4 }}>
-        <View
-          style={[
-            styles.newspaperActionsContainer,
-            { backgroundColor: GlobalStyles.colors.warning },
-          ]}
-        >
-          <AppIcon
-            icon={
-              <FontAwesome
-                name="pencil-square-o"
-                size={28}
-                color={GlobalStyles.colors.dark}
-              />
-            }
-            onPress={() => console.log("edit")}
-          />
-        </View>
-        <View
-          style={[
-            styles.newspaperActionsContainer,
-            { backgroundColor: GlobalStyles.colors.danger },
-          ]}
-        >
-          <AppIcon
-            icon={
-              <FontAwesome
-                name="trash"
-                size={28}
-                color={GlobalStyles.colors.dark}
-              />
-            }
-            onPress={() => console.log("delete")}
-          />
-        </View>
+      <View
+        style={[
+          styles.newspaperActionsContainer,
+          { backgroundColor: GlobalStyles.colors.danger },
+        ]}
+      >
+        <AppIcon
+          icon={
+            <FontAwesome
+              name="trash"
+              size={28}
+              color={GlobalStyles.colors.dark}
+            />
+          }
+          onPress={() => removeNewspaper(newspaper.id)}
+        />
       </View>
     );
   };
   return (
     <Swipeable
-      renderRightActions={renderRightActions}
-      renderLeftActions={renderLeftActions}
+      renderRightActions={() => renderRightActions(newspaper.id)}
+      renderLeftActions={() => renderLeftActions(newspaper.id)}
     >
       <View style={styles.newspaperContainer}>
         <View style={styles.imageContainer}>
@@ -95,7 +93,7 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
           />
         </View>
         <View style={styles.descriptionContainer}>
-          <ScrollView style={{ gap: 4, maxHeight: 100 }}>
+          <View style={{ gap: 4, maxHeight: 100 }}>
             <AppText labelStyles={styles.title}>
               {newspaper.title.toLocaleUpperCase()}
             </AppText>
@@ -115,14 +113,7 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
               />
               <AppText>{formatDate(newspaper.creationDate)}</AppText>
             </View>
-            <View>
-              <MaterialIcons
-                name="description"
-                size={24}
-                color={GlobalStyles.colors.light}
-              />
-            </View>
-          </ScrollView>
+          </View>
         </View>
       </View>
     </Swipeable>
