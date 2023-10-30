@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
 import { FC, useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 
 import { AntDesign } from "@expo/vector-icons";
 
@@ -9,11 +9,10 @@ import {
   AppContainer,
   AppIndicator,
 } from "../../components/UI";
-
 import NewspaperImage from "../../components/newspaper/NewspaperImage";
+import NewspaperDescription from "../../components/newspaper/NewspaperDescription";
 
 import { GlobalStyles } from "../../constants/styles";
-import NewspaperDescription from "../../components/newspaper/NewspaperDescription";
 
 interface INewspaperDetails {
   id: number;

@@ -18,6 +18,10 @@ const NewsPapers: FC<{ navigation: any }> = ({ navigation }) => {
   const { error, loading, newspapers } = useContext(NewspapersContext);
   const goBack = () => navigation.navigate("Home");
 
+  const manageNewspaper = () => {
+    navigation.navigate("manageNewspaper");
+  };
+
   return (
     <AppContainer>
       <AppBar
@@ -27,6 +31,7 @@ const NewsPapers: FC<{ navigation: any }> = ({ navigation }) => {
             name="add-to-list"
             size={32}
             color={GlobalStyles.colors.light}
+            onPress={manageNewspaper}
           />
         }
         backIcon={
