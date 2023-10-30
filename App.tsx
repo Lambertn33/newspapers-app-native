@@ -3,10 +3,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 
 import { StackNavigator } from "./navigation";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useFonts, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 
-import { PublishersContextProvider } from "./context";
+import {
+  PublishersContextProvider,
+  NewspapersContextProvider,
+} from "./context";
 import { GlobalStyles } from "./constants/styles";
 
 export default function App() {
@@ -19,13 +23,17 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer>
-        <PublishersContextProvider>
-          <StackNavigator />
-        </PublishersContextProvider>
-      </NavigationContainer>
-    </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <PublishersContextProvider>
+            <NewspapersContextProvider>
+              <StackNavigator />
+            </NewspapersContextProvider>
+          </PublishersContextProvider>
+        </NavigationContainer>
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 

@@ -1,3 +1,4 @@
 import PublishersContextProvider from "./PublishersContext";
+import NewspapersContextProvider from "./NewspapersContext";
 
-export { PublishersContextProvider }
+export { PublishersContextProvider, NewspapersContextProvider }

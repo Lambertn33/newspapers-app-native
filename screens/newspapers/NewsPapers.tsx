@@ -1,18 +1,35 @@
-import { FC } from "react";
-import { StyleSheet } from "react-native";
+import { FC, useContext } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 
-import { AppContainer, AppText, AppBar } from "../../components/UI";
+import { NewspapersContext } from "../../context/NewspapersContext";
+
+import {
+  AppContainer,
+  AppText,
+  AppBar,
+  AppIndicator,
+  AppError,
+} from "../../components/UI";
 import { GlobalStyles } from "../../constants/styles";
+import NewspapersList from "../../components/newspapers/NewspapersList";
 
 const NewsPapers: FC<{ navigation: any }> = ({ navigation }) => {
+  const { error, loading, newspapers } = useContext(NewspapersContext);
+  console.log("newspapers", newspapers);
   const goBack = () => navigation.navigate("Home");
 
   return (
     <AppContainer>
       <AppBar
         title="Newspapers"
-        actionIcon={<Entypo name="add-to-list" size={32} color={GlobalStyles.colors.light} />}
+        actionIcon={
+          <Entypo
+            name="add-to-list"
+            size={32}
+            color={GlobalStyles.colors.light}
+          />
+        }
         backIcon={
           <AntDesign
             name="back"
@@ -22,11 +39,36 @@ const NewsPapers: FC<{ navigation: any }> = ({ navigation }) => {
           />
         }
       />
-      <AppText>NewsPapers</AppText>
+      <SafeAreaView style={styles.container}>
+        {loading ? (
+          <AppIndicator />
+        ) : error !== null ? (
+          <AppError error="We couldn't fetch the publishers..." />
+        ) : newspapers.length > 0 ? (
+          <ScrollView>
+            <NewspapersList newspapers={newspapers} />
+          </ScrollView>
+        ) : (
+          <View style={styles.emptyList}>
+            <AppText>No publishers available</AppText>
+          </View>
+        )}
+      </SafeAreaView>
     </AppContainer>
   );
 };
 
 export default NewsPapers;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    flex: 1,
+  },
+  emptyList: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

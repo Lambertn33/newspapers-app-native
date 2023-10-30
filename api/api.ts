@@ -30,6 +30,7 @@ const DELETE = async (par: string) => {
   return await response.data;
 };
 
+// publishers
 export const getPublishers = async () => {
   const { publishers } = await GET("publishers");
   return publishers;
@@ -53,4 +54,10 @@ export const deletePublisher = async (id: number) => {
 export const updatePublisher = async (id: number, data: IPublisherInputs) => {
   const response = await PUT(`publishers/${id}`, data);
   return response;
+};
+
+//newspapers
+export const getNewspapers = async () => {
+  const { newspapers } = await GET("newspapers");
+  return newspapers;
 };
