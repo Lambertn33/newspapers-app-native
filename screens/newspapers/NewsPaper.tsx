@@ -1,12 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FC, useState, useEffect } from "react";
 
 import { AntDesign } from "@expo/vector-icons";
 
 import { getNewspaper } from "../../api/api";
-import { AppBar, AppContainer, AppIndicator } from "../../components/UI";
+import {
+  AppBar,
+  AppContainer,
+  AppIndicator,
+} from "../../components/UI";
+
+import NewspaperImage from "../../components/newspaper/NewspaperImage";
 
 import { GlobalStyles } from "../../constants/styles";
+import NewspaperDescription from "../../components/newspaper/NewspaperDescription";
 
 interface INewspaperDetails {
   id: number;
@@ -35,7 +42,7 @@ const NewsPaper: FC<{ route: any; navigation: any }> = ({
     loading: false,
   });
   const { newspaperId } = route.params;
-  
+
   useEffect(() => {
     const fetchNewspaper = async () => {
       setNewspaperState((prevState) => {
@@ -70,6 +77,12 @@ const NewsPaper: FC<{ route: any; navigation: any }> = ({
               />
             }
           />
+          <View style={styles.imageContainer}>
+            <NewspaperImage image={newspaper?.image} />
+          </View>
+          <View style={styles.descriptionContainer}>
+            <NewspaperDescription newspaper={newspaper} />
+          </View>
         </>
       )}
     </AppContainer>
@@ -78,4 +91,12 @@ const NewsPaper: FC<{ route: any; navigation: any }> = ({
 
 export default NewsPaper;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  imageContainer: {
+    flex: 1,
+  },
+  descriptionContainer: {
+    flex: 1,
+    padding: 16,
+  },
+});
