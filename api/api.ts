@@ -63,8 +63,8 @@ export const getNewspapers = async () => {
 };
 
 export const getNewspaper = async (id: string) => {
-  const { newspaper } = await GET(`newspapers/${id}`);
-  return newspaper;
+  const { newsPaper } = await GET(`newspapers/${id}`);
+  return newsPaper;
 };
 export const deleteNewspaper = async (id: number) => {
   const response = await DELETE(`newspapers/${id}`);

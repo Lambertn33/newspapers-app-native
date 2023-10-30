@@ -63,8 +63,9 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
     }
   };
 
+  // NEWSPAPER ACTION
   // view newspaper
-  const renderLeftActions = (id: number) => {
+  const renderLeftActions = () => {
     return (
       <View
         style={[
@@ -85,7 +86,9 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
       </View>
     );
   };
-  const renderRightActions = (id: number) => {
+
+  //edit /delete newspaper
+  const renderRightActions = () => {
     return (
       <View style={{ flexDirection: "row", gap: 4 }}>
         <View
@@ -95,7 +98,13 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
           ]}
         >
           <AppIcon
-            icon={<Ionicons name="create-sharp" size={24} color="white" />}
+            icon={
+              <Ionicons
+                name="create-sharp"
+                size={24}
+                color={GlobalStyles.colors.light}
+              />
+            }
             onPress={() => updatePublisher(publisher)}
           />
         </View>
@@ -106,7 +115,13 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
           ]}
         >
           <AppIcon
-            icon={<Ionicons name="trash" size={24} color="white" />}
+            icon={
+              <Ionicons
+                name="trash"
+                size={24}
+                color={GlobalStyles.colors.light}
+              />
+            }
             onPress={() => removePublisher(publisher.id)}
           />
         </View>
@@ -116,8 +131,8 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
 
   return (
     <Swipeable
-      renderLeftActions={() => renderLeftActions(publisher.id)}
-      renderRightActions={() => renderRightActions(publisher.id)}
+      renderLeftActions={renderLeftActions}
+      renderRightActions={renderRightActions}
     >
       <View style={styles.publisherContainer}>
         <View>

@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Home, Publisher, PublisherManage } from "../screens";
+import { Home, Publisher, PublisherManage, NewsPaper } from "../screens";
 import TabsNavigator from "./TabsNavigator";
 
 const Stack = createNativeStackNavigator();
@@ -13,6 +13,7 @@ const StackNavigator = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Tabs" component={TabsNavigator} />
       <Stack.Screen name="publisher" component={Publisher} />
+      <Stack.Screen name="newspaper" component={NewsPaper} />
       <Stack.Screen
         name="managePublisher"
         component={PublisherManage}

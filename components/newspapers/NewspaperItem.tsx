@@ -2,6 +2,7 @@ import { FC, useContext } from "react";
 import { Alert, Image, StyleSheet, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 import { NewspapersContext } from "../../context/NewspapersContext";
 
@@ -23,6 +24,8 @@ interface INewspaper {
 
 const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
   const newspapersCtx = useContext(NewspapersContext);
+  const navigation: any = useNavigation();
+
   // delete newspaper
   const removeNewspaper = async (id: number) => {
     try {
@@ -36,7 +39,7 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
   };
 
   // view newspaper details
-  const renderLeftActions = (id: number) => {
+  const renderLeftActions = () => {
     return (
       <View
         style={[
@@ -52,14 +55,18 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
               color={GlobalStyles.colors.dark}
             />
           }
-          onPress={() => console.log("view", id)}
+          onPress={() =>
+            navigation.navigate("newspaper", {
+              newspaperId: newspaper.id,
+            })
+          }
         />
       </View>
     );
   };
 
   // delete Action
-  const renderRightActions = (id: number) => {
+  const renderRightActions = () => {
     return (
       <View
         style={[
@@ -82,8 +89,8 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
   };
   return (
     <Swipeable
-      renderRightActions={() => renderRightActions(newspaper.id)}
-      renderLeftActions={() => renderLeftActions(newspaper.id)}
+      renderRightActions={renderRightActions}
+      renderLeftActions={renderLeftActions}
     >
       <View style={styles.newspaperContainer}>
         <View style={styles.imageContainer}>
