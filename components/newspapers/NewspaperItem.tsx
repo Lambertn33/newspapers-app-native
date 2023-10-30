@@ -2,6 +2,7 @@ import { FC, useContext } from "react";
 import { Alert, Image, StyleSheet, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
+
 import { NewspapersContext } from "../../context/NewspapersContext";
 
 import { deleteNewspaper } from "../../api/api";

@@ -1,7 +1,8 @@
 import { FC, useContext } from "react";
 import { StyleSheet, View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Swipeable } from "react-native-gesture-handler";
 
 import { PublishersContext } from "../../context/PublishersContext";
 
@@ -62,28 +63,74 @@ const PublisherItem: React.FC<{ publisher: IPublisher }> = ({ publisher }) => {
     }
   };
 
-  return (
-    <View style={styles.publisherContainer}>
-      <View>
-        <AppText labelStyles={styles.publisherTitle}>{publisher.names}</AppText>
-        <AppText>Joined on {formatDate(publisher.joinedDate)}</AppText>
-        <AppText>number of Newspapers: {publisher._count?.newsPapers}</AppText>
-      </View>
-      <View style={styles.publisherActions}>
+  // view newspaper
+  const renderLeftActions = (id: number) => {
+    return (
+      <View
+        style={[
+          styles.publisherActionsContainer,
+          { backgroundColor: GlobalStyles.colors.info },
+        ]}
+      >
         <AppIcon
-          icon={<Ionicons name="eye" size={24} color="white" />}
+          icon={
+            <FontAwesome
+              name="eye"
+              size={28}
+              color={GlobalStyles.colors.dark}
+            />
+          }
           onPress={viewPublisher}
         />
-        <AppIcon
-          icon={<Ionicons name="create-sharp" size={24} color="white" />}
-          onPress={() => updatePublisher(publisher)}
-        />
-        <AppIcon
-          icon={<Ionicons name="trash" size={24} color="white" />}
-          onPress={() => removePublisher(publisher.id)}
-        />
       </View>
-    </View>
+    );
+  };
+  const renderRightActions = (id: number) => {
+    return (
+      <View style={{ flexDirection: "row", gap: 4 }}>
+        <View
+          style={[
+            styles.publisherActionsContainer,
+            { backgroundColor: GlobalStyles.colors.warning },
+          ]}
+        >
+          <AppIcon
+            icon={<Ionicons name="create-sharp" size={24} color="white" />}
+            onPress={() => updatePublisher(publisher)}
+          />
+        </View>
+        <View
+          style={[
+            styles.publisherActionsContainer,
+            { backgroundColor: GlobalStyles.colors.danger },
+          ]}
+        >
+          <AppIcon
+            icon={<Ionicons name="trash" size={24} color="white" />}
+            onPress={() => removePublisher(publisher.id)}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  return (
+    <Swipeable
+      renderLeftActions={() => renderLeftActions(publisher.id)}
+      renderRightActions={() => renderRightActions(publisher.id)}
+    >
+      <View style={styles.publisherContainer}>
+        <View>
+          <AppText labelStyles={styles.publisherTitle}>
+            {publisher.names}
+          </AppText>
+          <AppText>Joined on {formatDate(publisher.joinedDate)}</AppText>
+          <AppText>
+            number of Newspapers: {publisher._count?.newsPapers}
+          </AppText>
+        </View>
+      </View>
+    </Swipeable>
   );
 };
 
@@ -102,11 +149,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  publisherActions: {
-    flexDirection: "row",
-    gap: 8,
-  },
   publisherTitle: {
     fontSize: 28,
+  },
+  publisherActionsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+    paddingHorizontal: 24,
   },
 });
