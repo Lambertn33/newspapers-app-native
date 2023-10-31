@@ -1,9 +1,35 @@
-import { StyleSheet, Text, View } from "react-native";
-import { FC, useState } from "react";
-import { AppDatePicker, AppTextInput } from "../UI";
+import { FC, useState, useContext } from "react";
+import { StyleSheet, View } from "react-native";
+import { ImagePickerAsset } from "expo-image-picker/build/ImagePicker.types";
 
-const NewspapersForm: FC<{ goBack: () => void}> = ({ goBack }) => {
-  const [newspaper, setNewspaper] = useState({
+import { PublishersContext } from "../../context/PublishersContext";
+import {
+  AppDatePicker,
+  AppTextInput,
+  AppSelect,
+  AppImagePicker,
+  AppText,
+  AppButton,
+} from "../UI";
+import { GlobalStyles } from "../../constants/styles";
+
+interface NewspaperInputs {
+  title: string;
+  link: string;
+  creationDate: Date;
+  file: {
+    uri: string;
+    fileName: string;
+    height: number;
+    width: number;
+  } | null;
+  publisherId: string;
+  abstract: string;
+}
+
+const NewspapersForm: FC<{ goBack: () => void }> = ({ goBack }) => {
+  const { publishers } = useContext(PublishersContext);
+  const [newspaper, setNewspaper] = useState<NewspaperInputs>({
     title: "",
     link: "",
     creationDate: new Date(),
@@ -12,7 +38,10 @@ const NewspapersForm: FC<{ goBack: () => void}> = ({ goBack }) => {
     abstract: "",
   });
 
-  const inputChangedHandler = (input: string, value: string | Date) => {
+  const inputChangedHandler = (
+    input: string,
+    value: string | Date | ImagePickerAsset
+  ) => {
     setNewspaper((prevValues) => {
       return {
         ...prevValues,
@@ -39,11 +68,52 @@ const NewspapersForm: FC<{ goBack: () => void}> = ({ goBack }) => {
             value: newspaper.link,
           }}
         />
-         <AppDatePicker
-          label="Publisher Joined Date"
+        <AppDatePicker
+          label="Newspaper Created date"
           date={newspaper.creationDate}
           onChangeDate={inputChangedHandler.bind(this, "creationDate")}
         />
+        <AppSelect
+          onSelect={inputChangedHandler.bind(this, "publisherId")}
+          label="Select Publisher"
+          data={publishers}
+        />
+        <View style={{ gap: 4 }}>
+          <AppImagePicker
+            label="Newspaper Image"
+            onPickImage={inputChangedHandler.bind(this, "file")}
+          />
+          <AppText labelStyles={styles.selectedImageLabel}>
+            {newspaper.file === null
+              ? "No Image selected"
+              : newspaper.file.fileName}
+          </AppText>
+        </View>
+        <AppTextInput
+          label="Newspaper Abstract"
+          otherProps={{
+            keyboardType: "default",
+            numberOfLines: 4,
+            onChangeText: inputChangedHandler.bind(this, "link"),
+            value: newspaper.link,
+          }}
+        />
+        <View style={styles.buttonsContainer}>
+          <AppButton
+            onPress={() => {}}
+            buttonStyles={styles.formButton}
+            labelStyles={styles.formButtonLabel}
+          >
+            Create
+          </AppButton>
+          <AppButton
+            onPress={goBack}
+            buttonStyles={styles.cancelButton}
+            labelStyles={styles.cancelButtonLabel}
+          >
+            Cancel
+          </AppButton>
+        </View>
       </View>
     </View>
   );
@@ -53,10 +123,37 @@ export default NewspapersForm;
 
 const styles = StyleSheet.create({
   container: {
-    gap: 24,
-    paddingVertical: 12,
+    flex: 1,
   },
   inputsContainer: {
     gap: 16,
+  },
+  selectedImageLabel: {
+    color: GlobalStyles.colors.info,
+  },
+  buttonsContainer: {
+    gap: 8,
+    flexDirection: "row",
+  },
+  formButton: {
+    borderColor: GlobalStyles.colors.light,
+    paddingVertical: 5,
+    borderWidth: 2,
+    alignItems: "center",
+    flex: 1,
+  },
+  cancelButton: {
+    backgroundColor: GlobalStyles.colors.light,
+    paddingVertical: 5,
+    borderColor: GlobalStyles.colors.light,
+    borderWidth: 2,
+    flex: 1,
+  },
+  cancelButtonLabel: {
+    fontSize: 20,
+    color: GlobalStyles.colors.semilight,
+  },
+  formButtonLabel: {
+    fontSize: 20,
   },
 });

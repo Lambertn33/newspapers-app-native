@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import { AppBar, AppContainer } from "../../components/UI";
@@ -24,18 +24,19 @@ export const Manage: FC<{ navigation: any; route: any }> = ({
           />
         }
       />
-      <View style={styles.formContainer}>
+      <ScrollView style={styles.formContainer}>
         <NewspapersForm  goBack={goBack}/>
-      </View>
+      </ScrollView>
     </AppContainer>
   );
 };
 
 const styles = StyleSheet.create({
   formContainer: {
-    marginVertical: 24,
+    // marginVertical: 24,
     marginHorizontal: 12,
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
     borderRadius: 12,
     backgroundColor: GlobalStyles.colors.semilight,
   },
