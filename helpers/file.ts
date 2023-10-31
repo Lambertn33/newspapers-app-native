@@ -1,3 +1,4 @@
+
 const generateFileName = (uri: string) => {
   const fileExtension = uri.split(".").pop();
   const randomName = `image_${Math.random()
@@ -6,12 +7,25 @@ const generateFileName = (uri: string) => {
   return randomName;
 };
 
+const getMimeType = (fileExtension: string) => {
+  switch (fileExtension) {
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'png':
+      return 'image/png';
+    default:
+      return 'application/octet-stream';
+  }
+};
+
 export const generateFileObject = (result: any) => {
+  const newImageUri =
+    "file:///" + result.assets[0].uri.split("file:/").join("");
   const uploadedFile = {
-    uri: result.assets[0].uri,
-    fileName: generateFileName(result.assets[0].uri),
-    height: result.assets[0].height,
-    width: result.assets[0].width,
+    uri: newImageUri,
+    name: generateFileName(result.assets[0].uri),
+    type: getMimeType(result.assets[0].type),
   };
   return uploadedFile;
 };

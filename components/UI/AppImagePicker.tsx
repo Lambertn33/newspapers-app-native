@@ -1,7 +1,6 @@
 import { FC } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { ImagePickerAsset } from "expo-image-picker/build/ImagePicker.types";
 
 import { generateFileObject } from "../../helpers/file";
 
@@ -11,7 +10,7 @@ import { GlobalStyles } from "../../constants/styles";
 
 const AppImagePicker: FC<{
   label: string;
-  onPickImage: (file: ImagePickerAsset) => void;
+  onPickImage: (file: any) => void;
 }> = ({ onPickImage, label }) => {
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -20,7 +19,7 @@ const AppImagePicker: FC<{
     });
 
     if (!result.canceled) {
-      const uploadedFile: ImagePickerAsset = generateFileObject(result);
+      const uploadedFile = generateFileObject(result);
       onPickImage(uploadedFile);
     }
   };

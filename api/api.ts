@@ -1,4 +1,5 @@
 import axios from "axios";
+import { stringifyDate } from "../helpers/date";
 
 const endpoint = process.env.EXPO_PUBLIC_BACKEND_URL;
 
@@ -6,6 +7,22 @@ interface IPublisherInputs {
   id?: number;
   names: string;
   joinedDate: string;
+}
+
+interface IFile {
+  uri: string;
+  name: string;
+  type: string;
+}
+
+interface INewsPaperInputs {
+  id?: number;
+  title: string;
+  link: string;
+  abstract: string;
+  publisherId: any;
+  creationDate: string;
+  file: IFile | null;
 }
 
 const GET = async (par: string) => {
@@ -66,7 +83,23 @@ export const getNewspaper = async (id: string) => {
   const { newsPaper } = await GET(`newspapers/${id}`);
   return newsPaper;
 };
+
 export const deleteNewspaper = async (id: number) => {
   const response = await DELETE(`newspapers/${id}`);
+  return response;
+};
+
+export const addNewsPaper = async (data: INewsPaperInputs) => {
+  console.log("inputs", data.file);
+  const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("link", data.link);
+  formData.append("abstract", data.abstract);
+  formData.append("publisherId", data.publisherId);
+  formData.append("creationDate", stringifyDate(data.creationDate));
+  formData.append("file", data.file as any);
+  const response = await POST("newspapers", formData, {
+    "Content-Type": "multipart/form-data"
+  });
   return response;
 };

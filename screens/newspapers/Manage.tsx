@@ -1,16 +1,29 @@
 import { FC, useContext } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
+import { addNewsPaper } from "../../api/api";
+
 import { AppBar, AppContainer } from "../../components/UI";
-import { GlobalStyles } from "../../constants/styles";
 import NewspapersForm from "../../components/newspapers/NewspapersForm";
+
+import { GlobalStyles } from "../../constants/styles";
 
 export const Manage: FC<{ navigation: any; route: any }> = ({
   navigation,
   route,
 }) => {
   const goBack = () => navigation.goBack();
+
+  const createNewsPaperHandler = async (values: any) => {
+    console.log(values);
+    try {
+      const response = await addNewsPaper(values);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <AppContainer>
       <AppBar
@@ -25,7 +38,10 @@ export const Manage: FC<{ navigation: any; route: any }> = ({
         }
       />
       <ScrollView style={styles.formContainer}>
-        <NewspapersForm  goBack={goBack}/>
+        <NewspapersForm
+          goBack={goBack}
+          onManageNewspaper={createNewsPaperHandler}
+        />
       </ScrollView>
     </AppContainer>
   );
@@ -33,7 +49,6 @@ export const Manage: FC<{ navigation: any; route: any }> = ({
 
 const styles = StyleSheet.create({
   formContainer: {
-    // marginVertical: 24,
     marginHorizontal: 12,
     paddingVertical: 16,
     paddingHorizontal: 24,

@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { Alert, Image, StyleSheet, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
 import { Swipeable } from "react-native-gesture-handler";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -101,7 +101,7 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
           />
         </View>
         <View style={styles.descriptionContainer}>
-          <View style={{ gap: 4, maxHeight: 100 }}>
+          <ScrollView style={{ gap: 4, maxHeight: 100 }}>
             <AppText labelStyles={styles.title}>
               {newspaper.title.toLocaleUpperCase()}
             </AppText>
@@ -121,7 +121,7 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
               />
               <AppText>{formatDate(newspaper.creationDate)}</AppText>
             </View>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </Swipeable>

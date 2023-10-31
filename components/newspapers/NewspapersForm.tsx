@@ -1,7 +1,5 @@
 import { FC, useState, useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { ImagePickerAsset } from "expo-image-picker/build/ImagePicker.types";
-
 import { PublishersContext } from "../../context/PublishersContext";
 import {
   AppDatePicker,
@@ -19,15 +17,17 @@ interface NewspaperInputs {
   creationDate: Date;
   file: {
     uri: string;
-    fileName: string;
-    height: number;
-    width: number;
+    name: string;
+    type: string;
   } | null;
   publisherId: string;
   abstract: string;
 }
 
-const NewspapersForm: FC<{ goBack: () => void }> = ({ goBack }) => {
+const NewspapersForm: FC<{
+  goBack: () => void;
+  onManageNewspaper: Function;
+}> = ({ goBack, onManageNewspaper }) => {
   const { publishers } = useContext(PublishersContext);
   const [newspaper, setNewspaper] = useState<NewspaperInputs>({
     title: "",
@@ -40,7 +40,7 @@ const NewspapersForm: FC<{ goBack: () => void }> = ({ goBack }) => {
 
   const inputChangedHandler = (
     input: string,
-    value: string | Date | ImagePickerAsset
+    value: any
   ) => {
     setNewspaper((prevValues) => {
       return {
@@ -48,6 +48,10 @@ const NewspapersForm: FC<{ goBack: () => void }> = ({ goBack }) => {
         [input]: value,
       };
     });
+  };
+
+  const submitForm = () => {
+    onManageNewspaper(newspaper);
   };
   return (
     <View style={styles.container}>
@@ -86,7 +90,7 @@ const NewspapersForm: FC<{ goBack: () => void }> = ({ goBack }) => {
           <AppText labelStyles={styles.selectedImageLabel}>
             {newspaper.file === null
               ? "No Image selected"
-              : newspaper.file.fileName}
+              : newspaper.file.name}
           </AppText>
         </View>
         <AppTextInput
@@ -94,13 +98,13 @@ const NewspapersForm: FC<{ goBack: () => void }> = ({ goBack }) => {
           otherProps={{
             keyboardType: "default",
             numberOfLines: 4,
-            onChangeText: inputChangedHandler.bind(this, "link"),
-            value: newspaper.link,
+            onChangeText: inputChangedHandler.bind(this, "abstract"),
+            value: newspaper.abstract,
           }}
         />
         <View style={styles.buttonsContainer}>
           <AppButton
-            onPress={() => {}}
+            onPress={submitForm}
             buttonStyles={styles.formButton}
             labelStyles={styles.formButtonLabel}
           >
