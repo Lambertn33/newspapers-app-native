@@ -90,7 +90,6 @@ export const deleteNewspaper = async (id: number) => {
 };
 
 export const addNewsPaper = async (data: INewsPaperInputs) => {
-  console.log("inputs", data.file);
   const formData = new FormData();
   formData.append("title", data.title);
   formData.append("link", data.link);

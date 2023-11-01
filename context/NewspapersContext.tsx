@@ -22,13 +22,15 @@ interface INewspapersContext {
   loading: boolean;
   error: Error | null | unknown;
   removeNewspaper: (id: number) => void;
+  addNewspaper: (newspapaer: INewspaper) => void;
 }
 
 export const NewspapersContext = createContext<INewspapersContext>({
   newspapers: [],
   loading: false,
   error: null,
-  removeNewspaper: (id: number) => {}
+  removeNewspaper: (id: number) => {},
+  addNewspaper: (newspapaer: INewspaper) => {},
 });
 
 const NewspapersContextProvider: FC<{ children: ReactNode }> = ({
@@ -54,16 +56,24 @@ const NewspapersContextProvider: FC<{ children: ReactNode }> = ({
   }, []);
 
   const removeNewspaper = (id: number) => {
-    const filteredNewspapers = newspapers.filter((newspaper) => newspaper.id !== id);
+    const filteredNewspapers = newspapers.filter(
+      (newspaper) => newspaper.id !== id
+    );
     setNewspapers(filteredNewspapers);
+  };
+
+  const addNewspaper = (newspaper: INewspaper) => {
+    setNewspapers((prevState) => {
+      return [...prevState, newspaper];
+    });
   };
 
   const contextValue: INewspapersContext = {
     newspapers,
     loading,
     error,
-    removeNewspaper
-
+    removeNewspaper,
+    addNewspaper,
   };
 
   return (

@@ -9,18 +9,39 @@ import NewspapersForm from "../../components/newspapers/NewspapersForm";
 
 import { GlobalStyles } from "../../constants/styles";
 
+import { NewspapersContext } from "../../context/NewspapersContext";
+import { PublishersContext } from "../../context/PublishersContext";
+
 export const Manage: FC<{ navigation: any; route: any }> = ({
   navigation,
   route,
 }) => {
+  const publishersCtx = useContext(PublishersContext);
+  const newspapersCtx = useContext(NewspapersContext);
+
   const goBack = () => navigation.goBack();
 
   const createNewsPaperHandler = async (values: any) => {
-    console.log(values);
     try {
       const response = await addNewsPaper(values);
-      console.log(response);
+      const { newNewsPaper: newNewspaper } = response;
+      const selectedPublisher = publishersCtx.publishers.find(
+        (publisher) => publisher.id == values.publisherId
+      );
+
+      const createdNewspaper = {
+        id: newNewspaper.id,
+        image: newNewspaper.image,
+        creationDate: newNewspaper.creationDate,
+        title: newNewspaper.title,
+        publisher: {
+          names: selectedPublisher?.names!,
+        },
+      };
+      newspapersCtx.addNewspaper(createdNewspaper);
+      navigation.navigate("newspapers");
     } catch (error) {
+      // TODO: Handle Errors
       console.log(error);
     }
   };
