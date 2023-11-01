@@ -35,10 +35,12 @@ export const Manage: FC<{ navigation: any; route: any }> = ({
         creationDate: newNewspaper.creationDate,
         title: newNewspaper.title,
         publisher: {
+          id: selectedPublisher?.id!,
           names: selectedPublisher?.names!,
         },
       };
       newspapersCtx.addNewspaper(createdNewspaper);
+      publishersCtx.updatePublisherNewspapersCount(values.publisherId, "ADD");
       navigation.navigate("newspapers");
     } catch (error) {
       // TODO: Handle Errors

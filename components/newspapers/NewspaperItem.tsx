@@ -5,6 +5,7 @@ import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import { NewspapersContext } from "../../context/NewspapersContext";
+import { PublishersContext } from "../../context/PublishersContext";
 
 import { deleteNewspaper } from "../../api/api";
 
@@ -18,12 +19,15 @@ interface INewspaper {
   creationDate: Date;
   title: string;
   publisher: {
+    id: number;
     names: string;
   };
 }
 
 const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
   const newspapersCtx = useContext(NewspapersContext);
+  const publishersCtx = useContext(PublishersContext);
+
   const navigation: any = useNavigation();
 
   // delete newspaper
@@ -31,6 +35,10 @@ const NewspaperItem: FC<{ newspaper: INewspaper }> = ({ newspaper }) => {
     try {
       await deleteNewspaper(id);
       newspapersCtx.removeNewspaper(id);
+      publishersCtx.updatePublisherNewspapersCount(
+        newspaper.publisher.id,
+        "REMOVE"
+      );
       Alert.alert("Success", "Newspaper deleted successfully");
     } catch (error) {
       // TODO: UPDATE

@@ -11,7 +11,7 @@ interface IPublisher {
   id: number;
   names: string;
   joinedDate: Date;
-  _count?: {
+  _count: {
     newsPapers: number;
   };
 }
@@ -23,6 +23,7 @@ interface IPublishersContext {
   addPublisher: (newPublisher: IPublisher) => void;
   editPublisher: (publisher: IPublisher) => void;
   removePublisher: (id: number) => void;
+  updatePublisherNewspapersCount: (id: number, type: string) => void;
 }
 
 export const PublishersContext = createContext<IPublishersContext>({
@@ -32,6 +33,7 @@ export const PublishersContext = createContext<IPublishersContext>({
   addPublisher: (newPublisher: IPublisher) => {},
   removePublisher: (id: number) => {},
   editPublisher: (publisher: IPublisher) => {},
+  updatePublisherNewspapersCount: (id: number, type: string) => {},
 });
 
 const PublishersContextProvider: FC<{ children: ReactNode }> = ({
@@ -71,6 +73,16 @@ const PublishersContextProvider: FC<{ children: ReactNode }> = ({
     setPublishers(publishersCopy);
   };
 
+  const updatePublisherNewspapersCount = (id: number, type: string) => {
+    const publishersCopy = [...publishers];
+    const publisherIndex = publishersCopy.findIndex((p) => p.id === id);
+    publishers[publisherIndex]._count.newsPapers =
+      type === "ADD"
+        ? publishers[publisherIndex]._count.newsPapers + 1
+        : publishers[publisherIndex]._count.newsPapers - 1;
+    setPublishers(publishersCopy);
+  };
+
   const removePublisher = (id: number) => {
     const filteredPublishers = publishers.filter((pub) => pub.id !== id);
     setPublishers(filteredPublishers);
@@ -83,6 +95,7 @@ const PublishersContextProvider: FC<{ children: ReactNode }> = ({
     addPublisher,
     removePublisher,
     editPublisher,
+    updatePublisherNewspapersCount,
   };
 
   return (

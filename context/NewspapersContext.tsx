@@ -13,6 +13,7 @@ interface INewspaper {
   creationDate: Date;
   title: string;
   publisher: {
+    id: number,
     names: string;
   };
 }

@@ -54,7 +54,7 @@ const NewsPapers: FC<{ navigation: any }> = ({ navigation }) => {
           </ScrollView>
         ) : (
           <View style={styles.emptyList}>
-            <AppText>No publishers available</AppText>
+            <AppText>No newspapers available</AppText>
           </View>
         )}
       </SafeAreaView>
